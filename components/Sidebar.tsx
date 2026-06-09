@@ -15,7 +15,6 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Desktop & Tablet Sidebar Layout */}
       <nav className="sticky top-0 left-0 z-40 hidden h-screen w-20 flex-col items-center border-r border-zinc-800/80 bg-[#0c0c0e] py-6 md:flex lg:w-64 transition-all duration-300">
         <ul className="w-full space-y-2 px-3 mt-8">
           {navigationItems.map((item) => {
@@ -48,7 +47,6 @@ export default function Sidebar() {
         </ul>
       </nav>
 
-      {/* Mobile Bottom Navigation Bar Layer */}
       <nav className="fixed bottom-0 left-0 right-0 z-50 flex h-16 items-center justify-around border-t border-zinc-800 bg-[#0c0c0e]/90 backdrop-blur-md md:hidden px-4">
         {navigationItems.map((item) => {
           // @ts-ignore

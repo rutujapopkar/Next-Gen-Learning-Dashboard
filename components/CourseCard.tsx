@@ -1,11 +1,12 @@
 'use client';
 
-import { Course } from '@/types/dashboard';
+import { Course } from '../types/dashboard';
 import BentoCard from './BentoCard';
 import * as Icons from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function CourseCard({ course }: { course: Course }) {
+  // Safe icon fallback: checks if the icon exists in Lucide, otherwise uses BookOpen
   // @ts-ignore
   const IconComponent = Icons[course.icon_name] || Icons.BookOpen;
 

@@ -1,9 +1,9 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import React from 'react';
 
-const parentVariants = {
+const parentVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
