@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Quick dark mode background fallback to verify styling immediately */
+body {
+  background-color: #08080a;
+  color: #f4f4f5;
+}
+
 /* Custom scrollbar styles for your Bento Grid boards */
 ::-webkit-scrollbar {
   width: 6px;
