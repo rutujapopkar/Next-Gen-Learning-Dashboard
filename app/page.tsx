@@ -1,20 +1,55 @@
 import React from 'react';
+import { cookies } from 'next/headers';
+import { createServerClient } from '@supabase/ssr';
 import { getCourses } from '@/lib/supabase';
 import DashboardShell from '@/components/DashboardShell';
-import { Course } from '@/types/dashboard';
+import AuthPanel from '@/components/AuthPanel';
 
-// Enforce Next.js to pull fresh records on every request
 export const revalidate = 0;
 
 export default async function DashboardPage() {
-  let initialCourses: Course[] = [];
+  const cookieStore = await cookies();
+
+  const supabaseServer = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return cookieStore.getAll();
+        },
+        setAll(cookiesToSet) {
+          try {
+            cookiesToSet.forEach(({ name, value, options }) =>
+              cookieStore.set(name, value, options)
+            );
+          } catch {
+            // Handled internally on server layers
+          }
+        },
+      },
+    }
+  );
+
+  // SECURE AUTHENTICATION RE-VERIFICATION
+  // This contacts the Supabase Auth server directly, clearing your terminal warning!
+  const { data: { user }, error: authError } = await supabaseServer.auth.getUser();
   
-  try {
-    // Fetches securely before sending HTML layout to the browser window
-    initialCourses = await getCourses();
-  } catch (err) {
-    console.error("Critical: Supabase connection failed during server fetch:", err);
+  if (authError || !user) {
+    return <AuthPanel />;
   }
 
-  return <DashboardShell initialCourses={initialCourses || []} />;
+  // Pull personalized student name metadata mapped to the verified user ID
+  const { data: profile } = await supabaseServer
+    .from('profiles')
+    .select('full_name')
+    .eq('id', user.id)
+    .single();
+
+  const studentName = profile?.full_name || "Explorer_Node";
+  
+  // Fetch live courses database matrix
+  const initialCourses = await getCourses();
+
+  return <DashboardShell initialCourses={initialCourses || []} studentName={studentName} />;
 }
