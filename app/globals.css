@@ -7,9 +7,17 @@
 }
 
 @layer base {
+  html {
+    /* This scales up the base root font size from 16px to 18px */
+    font-size: 130%;
+  }
+
   body {
     background-color: #08080a;
     color: #f4f4f5;
+    /* This ensures text-rendering across components defaults to a slightly larger, cleaner size */
+    font-size: var(--text-base); 
+    line-height: var(--leading-relaxed);
   }
 }
 
