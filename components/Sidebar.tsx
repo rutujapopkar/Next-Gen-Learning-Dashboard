@@ -21,7 +21,7 @@ export default function Sidebar({ currentView, onChangeView }: SidebarProps) {
   return (
     <aside className="fixed bottom-0 left-0 right-0 z-50 h-16 w-full border-t border-white/5 bg-zinc-950/80 backdrop-blur-md md:sticky md:top-0 md:h-screen md:w-20 md:border-r md:border-t-0 lg:w-64 flex md:flex-col items-center py-0 md:py-8 transition-all duration-300">
       <div className="hidden lg:flex items-center gap-3 px-6 w-full mb-8 font-mono text-xs font-black tracking-widest text-violet-400">
-        <GraduationCap className="h-5 w-5" /> TERMINAL_v1.0
+        <GraduationCap className="h-5 w-5" /> Dashboard
       </div>
 
       <ul className="flex flex-row md:flex-col w-full justify-around md:justify-start md:space-y-2 px-4 md:px-2 lg:px-4">
